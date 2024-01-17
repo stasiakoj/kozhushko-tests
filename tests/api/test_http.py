@@ -3,5 +3,10 @@ import requests
 
 @pytest.mark.http
 def test_first_request():
-    r = requests.get('http://api.github.com/zen')
-    print(r.text)
+    r = requests.get('https://api.github.com/zen')
+    print(f"Response is {r.text}")
+
+def test_second_request():
+    r = requests.get('https://api.github.com/users/defunkt')
+    print(f"Response is {r.text}")
+
