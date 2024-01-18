@@ -25,3 +25,18 @@ def test_repo_cannot_be_found(github_api):
 def test_repo_with_single_char_can_be_found(github_api):
     r = github_api.search_repo('s')
     assert r['total_count'] != 0
+
+@pytest.mark.api
+def test_get_emojis(github_api):
+    r = github_api.get_emojis()
+    assert r['ukraine'] != None
+
+@pytest.mark.api
+def test_repo_list_commits_size(github_api):
+    r = github_api.list_commits('sergii-butenko', 'become-qa-auto-aug2020')
+    assert len(r) > 0
+
+@pytest.mark.api
+def test_repo_list_commits_message(github_api):
+    r = github_api.list_commits('sergii-butenko', 'become-qa-auto-aug2020')
+    assert r[-1]['commit']['message'] == 'Initial commit'
