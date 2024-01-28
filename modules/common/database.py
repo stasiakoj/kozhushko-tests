@@ -41,8 +41,48 @@ class Database:
         self.cursor.execute(query)
         self.connection.commit()
 
+    def get_product_by_id(self, product_id):
+        query = f"SELECT id, name, description, quantity FROM products WHERE id = {product_id}"
+        self.cursor.execute(query)
+        record = self.cursor.fetchall()
+        return record
+
     def delete_product_by_id(self, product_id):
         query = f"DELETE FROM products WHERE id = {product_id}"
+        self.cursor.execute(query)
+        self.connection.commit()
+
+    def insert_user(self, customer_id, name, address, city, postal_code, country):
+        query = f"INSERT OR REPLACE INTO customers (id, name, address, city, postalCode, country) \
+            VALUES ({customer_id}, '{name}', '{address}', '{city}', '{postal_code}', '{country}')"
+        self.cursor.execute(query)
+        self.connection.commit()
+
+    def get_user_by_id(self, customer_id):
+        query = f"SELECT id, name, address, city, postalCode, country FROM customers WHERE id = {customer_id}"
+        self.cursor.execute(query)
+        record = self.cursor.fetchall()
+        return record
+
+    def delete_user_by_id(self, customer_id):
+        query = f"DELETE FROM customers WHERE id = {customer_id}"
+        self.cursor.execute(query)
+        self.connection.commit()
+
+    def insert_order(self, order_id, customer_id, product_id, order_date):
+        query = f"INSERT OR REPLACE INTO orders (id, order_id, customer_id, product_id, order_date) \
+            VALUES ({order_id}, {customer_id}, {product_id}, '{order_date}')"
+        self.cursor.execute(query)
+        self.connection.commit()
+
+    def get_order_by_id(self, order_id):
+        query = f"SELECT id, order_id, customer_id, product_id, order_date FROM orders WHERE id = {order_id}"
+        self.cursor.execute(query)
+        record = self.cursor.fetchall()
+        return record
+
+    def delete_order_by_id(self, order_id):
+        query = f"DELETE FROM orders WHERE id = {order_id}"
         self.cursor.execute(query)
         self.connection.commit()
 

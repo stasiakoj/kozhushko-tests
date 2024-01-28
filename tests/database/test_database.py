@@ -61,3 +61,24 @@ def test_detailed_orders():
     assert orders[0][1] == 'Sergii'
     assert orders[0][2] == 'солодка вода'
     assert orders[0][3] == 'з цукром'
+
+@pytest.mark.database
+def test_create_user():
+    db = Database()
+    db.insert_user(10, 'Nastya', 'Metro', 'Dnipro', '777', 'Ukraine')
+    users = db.get_user_by_id(10)
+    assert len(users) == 1
+    assert users[0][0] == 10
+    assert users[0][1] == 'Nastya'
+    assert users[0][2] == 'Metro'
+    assert users[0][3] == 'Dnipro'
+    assert users[0][4] == '777'
+    assert users[0][5] == 'Ukraine'
+
+@pytest.mark.database
+def test_delete_user():
+    db = Database()
+    db.insert_user(10, 'Nastya', 'Metro', 'Dnipro', '777', 'Ukraine')
+    db.delete_user_by_id(10)
+    users = db.get_user_by_id(10)
+    assert len(users) == 0
